@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import { MoralisProvider } from "react-moralis";
+import Layout from '../components/Layout';
 
 
 function MyApp({ Component, pageProps }) {
@@ -8,7 +9,9 @@ function MyApp({ Component, pageProps }) {
       appId={process.env.NEXT_PUBLIC_APP_ID}
       serverUrl={process.env.NEXT_PUBLIC_SERVER_URL}
     >
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </MoralisProvider>
   )
 }
