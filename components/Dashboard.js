@@ -1,9 +1,11 @@
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useMoralis, useMoralisQuery } from "react-moralis"
 import { Avatar } from "./Avatar"
 
 const Dashboard = () => {
   const { user, Moralis } = useMoralis()
+  const [saveLoading, setSaveLoading] = useState(false)
   const [dashboardInput, setDashboardInput] = useState(
     {
       link: '',
@@ -37,6 +39,7 @@ const Dashboard = () => {
     const values = { ...dashboardInput }
     values[e.target.name] = e.target.value
     setDashboardInput(values)
+    setSaveLoading(false)
   }
 
   const saveDashboard = async (e) => {
@@ -46,7 +49,7 @@ const Dashboard = () => {
 
     console.log(dashboardInput)
 
-    
+
     if (!data[0]) {
       const Pages = Moralis.Object.extend('Pages')
       const page = new Pages()
@@ -58,17 +61,17 @@ const Dashboard = () => {
       }).then(() => {
         alert('saved!')
       }).catch(error => {
-        console.log(error.message)
+        setSaveLoading(true)
       })
     } else {
       const Pages = Moralis.Object.extend('Pages')
-      const query = new Moralis.Query(Pages) 
+      const query = new Moralis.Query(Pages)
       query.equalTo('ethAddress', user.get("ethAddress"))
       const page = await query.first()
 
       page.set("link", dashboardInput.link)
       page.set("about", dashboardInput.about)
-      page.save()
+      page.save().then(() => setSaveLoading(true))
     }
   }
 
@@ -185,15 +188,18 @@ const Dashboard = () => {
             <button
               type="button"
               className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={!data[0]}
             >
-              Cancel
+              <Link href={`/user/${data[0]?.attributes.link}`}>
+                View Your Page
+              </Link>
             </button>
             <button
               onClick={saveDashboard}
               type="submit"
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Save
+              {saveLoading ? "Saved!" : "Save"}
             </button>
           </div>
         </div>

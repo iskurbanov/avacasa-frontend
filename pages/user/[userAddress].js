@@ -4,8 +4,14 @@ export default function UserAddress({ userAddress }) {
 
   const { data, error, isLoading } = useMoralisQuery(
     'Pages',
-    (query) => query
-      .equalTo('ethAddress', userAddress),
+    (query) =>
+      userAddress.length > 40 ?
+        query
+          .equalTo('ethAddress', userAddress)
+        :
+        query
+          .equalTo('link', userAddress)
+    ,
     [],
     {
       live: true
@@ -13,6 +19,8 @@ export default function UserAddress({ userAddress }) {
   )
 
   if (isLoading) return <p>loading...</p>
+
+
 
   console.log(data)
 

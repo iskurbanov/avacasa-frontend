@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useMoralis } from 'react-moralis'
+import { useEffect, useState } from 'react'
+import { useMoralis, useMoralisWeb3Api } from 'react-moralis'
 import { Avatar } from '../components/Avatar'
 import Dashboard from '../components/Dashboard'
 import { Login } from '../components/Login'
@@ -9,9 +10,15 @@ import Nfts from '../components/Nfts'
 
 
 export default function Home() {
-  const { user, isAuthenticated } = useMoralis()
+  const { refetchUserData, user, isAuthenticated, account } = useMoralis()
+  const [selectNft, setSelectNft] = useState([])
+
+  useEffect(() => {
+    // window.location.reload(false);
+  }, [user])
 
   if (!isAuthenticated) return <Login />
+
 
   return (
     <div className="">
@@ -31,7 +38,7 @@ export default function Home() {
           </h1>
         </div>
 
-        <Nfts />
+        <Nfts selectNft={selectNft} setSelectNft={setSelectNft} />
         <Dashboard />
       </div>
     </div>
