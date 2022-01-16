@@ -60,16 +60,23 @@ const Dashboard = () => {
       const Pages = Moralis.Object.extend('Pages')
       const page = new Pages()
 
-      page.save({
-        link: dashboardInput.link,
-        about: dashboardInput.about,
-        NFTs: dashboardInput.NFTs,
-        ethAddress: user.get("ethAddress"),
-      }).then(() => {
-        alert('saved!')
-      }).catch(error => {
-        setSaveLoading(true)
-      })
+      toast.promise(
+        page.save({
+          link: dashboardInput.link,
+          about: dashboardInput.about,
+          NFTs: dashboardInput.NFTs,
+          ethAddress: user.get("ethAddress"),
+        }).then(() => {
+          setSaveLoading(true)
+        }).catch(error => {
+          console.log(error)
+        }),
+        {
+          loading: 'Saving...',
+          success: <b>Settings saved!</b>,
+          error: <b>Could not save.</b>,
+        }
+      )
     } else {
       const Pages = Moralis.Object.extend('Pages')
       const query = new Moralis.Query(Pages)

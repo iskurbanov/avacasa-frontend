@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNFTBalances } from 'react-moralis'
 import { useVerifyMetadata } from "../hooks/useVerifyMetadata"
+import { CheckCircle } from '@heroicons/react/solid'
 
 
 const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
@@ -49,7 +50,7 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                     <div key={index} className="relative" >
                       {
                         nft.image ?
-                          <div>
+                          <div className="px-1">
                             <img
                               onClick={(e) => {
                                 handleSelectNft(nft.image)
@@ -57,7 +58,7 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                               }}
                               src={nft.image}
                               id={`select-${index}`}
-                              className={`object-contain h-48 w-48`}
+                              className={`bg-white object-contain h-48 w-48 hover:shadow-xl ${dashboardInput.NFTs.includes(nft?.image) ? "border-2 border-indigo-600" : "border-2 border-black"}`}
                               onError={(e) => {
                                 e.target.style.display = 'none'
                                 // e.currentTarget.onerror = null
@@ -65,8 +66,12 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                               }}
                             />
                             {
-                              dashboardInput.NFTs.includes(nft.image) && 
-                              <p>Saved!</p>
+                              dashboardInput.NFTs.includes(nft?.image) &&
+                              <div className="absolute top-1 left-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
                             }
                           </div>
                           :
