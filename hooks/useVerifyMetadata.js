@@ -59,7 +59,7 @@ export const useVerifyMetadata = () => {
                 }//Valid Result
             })
             .catch(err => {
-                console.error("useVerifyMetadata.getMetadata() Error Caught:", {err, NFT, URI:NFT.token_uri});
+                // console.error("useVerifyMetadata.getMetadata() Error Caught:", {err, NFT, URI:NFT.token_uri});
             });
     }//getMetadata()
 

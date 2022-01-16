@@ -1,17 +1,15 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useMoralis, useMoralisQuery } from "react-moralis"
+import toast, { Toaster } from 'react-hot-toast';
 import { Avatar } from "./Avatar"
+import Nfts from "./Nfts"
 
 const Dashboard = () => {
   const { user, Moralis } = useMoralis()
   const [saveLoading, setSaveLoading] = useState(false)
-  const [dashboardInput, setDashboardInput] = useState(
-    {
-      link: '',
-      about: ''
-    }
-  )
+  const [selectNft, setSelectNft] = useState([])
+
 
   const { data, isLoading, error } = useMoralisQuery(
     'Pages',
@@ -23,11 +21,20 @@ const Dashboard = () => {
     }
   )
 
+  const [dashboardInput, setDashboardInput] = useState(
+    {
+      link: '',
+      about: '',
+      NFTs: []
+    }
+  )
+
   useEffect(() => {
     if (!isLoading && data[0]) {
       let fetchedData = {
         link: data[0]?.attributes.link,
-        about: data[0]?.attributes.about
+        about: data[0]?.attributes.about,
+        NFTs: data[0]?.attributes.NFTs
       }
 
       setDashboardInput(fetchedData)
@@ -47,8 +54,7 @@ const Dashboard = () => {
 
     if (!dashboardInput) return
 
-    console.log(dashboardInput)
-
+    console.log("saving dashboard", dashboardInput)
 
     if (!data[0]) {
       const Pages = Moralis.Object.extend('Pages')
@@ -57,7 +63,8 @@ const Dashboard = () => {
       page.save({
         link: dashboardInput.link,
         about: dashboardInput.about,
-        ethAddress: user.get("ethAddress")
+        NFTs: dashboardInput.NFTs,
+        ethAddress: user.get("ethAddress"),
       }).then(() => {
         alert('saved!')
       }).catch(error => {
@@ -71,13 +78,23 @@ const Dashboard = () => {
 
       page.set("link", dashboardInput.link)
       page.set("about", dashboardInput.about)
-      page.save().then(() => setSaveLoading(true))
+      page.set("NFTs", dashboardInput.NFTs)
+      toast.promise(
+        page.save().then(() => setSaveLoading(true)),
+        {
+          loading: 'Saving...',
+          success: <b>Settings saved!</b>,
+          error: <b>Could not save.</b>,
+        }
+      )
     }
   }
 
   return (
-    <div className="max-w-4xl m-auto">
+    <div className="max-w-4xl m-auto pb-16">
+      <Toaster position="bottom-center" />
       <form className="space-y-8 divide-y divide-gray-200">
+        <Nfts dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} />
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
             <div>
@@ -101,6 +118,7 @@ const Dashboard = () => {
                       type="text"
                       name="link"
                       id="link"
+                      maxLength="25"
                       autoComplete="username"
                       value={dashboardInput.link}
                       onChange={e => handleChangeInput(e)}
@@ -120,7 +138,6 @@ const Dashboard = () => {
                     name="about"
                     rows={3}
                     className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                    // defaultValue={''}
                     value={dashboardInput.about}
                     onChange={e => handleChangeInput(e)}
                   />
@@ -128,7 +145,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
+              {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
                 <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
                   Photo
                 </label>
@@ -145,11 +162,11 @@ const Dashboard = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
-          <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+          {/* <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
             <div>
               <h3 className="text-lg leading-6 font-medium text-gray-900">Profile Links</h3>
               <p className="mt-1 max-w-2xl text-sm text-gray-500">Add your favorite articles, websites, projects you invest in, or anything links to anything else!</p>
@@ -180,7 +197,7 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="pt-5">
@@ -197,7 +214,8 @@ const Dashboard = () => {
             <button
               onClick={saveDashboard}
               type="submit"
-              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={saveLoading}
+              className={`ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${saveLoading ? "bg-gray-400" : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"} `}
             >
               {saveLoading ? "Saved!" : "Save"}
             </button>

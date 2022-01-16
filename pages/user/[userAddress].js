@@ -28,6 +28,11 @@ export default function UserAddress({ userAddress }) {
     <div>
       <h1>{data[0]?.attributes.link}</h1>
       <h2>{data[0]?.attributes.about}</h2>
+      {
+        data[0]?.attributes.NFTs.map(item => (
+          <img key={item} className="h-48 w-48" src={item} />
+        ))
+      }
     </div>
   )
 }

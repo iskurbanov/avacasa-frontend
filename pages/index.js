@@ -11,7 +11,7 @@ import Nfts from '../components/Nfts'
 
 export default function Home() {
   const { refetchUserData, user, isAuthenticated, account } = useMoralis()
-  const [selectNft, setSelectNft] = useState([])
+  
 
   useEffect(() => {
     // window.location.reload(false);
@@ -37,8 +37,6 @@ export default function Home() {
             {user.get("ethAddress")}
           </h1>
         </div>
-
-        <Nfts selectNft={selectNft} setSelectNft={setSelectNft} />
         <Dashboard />
       </div>
     </div>
