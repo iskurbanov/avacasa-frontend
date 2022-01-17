@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useMoralis, useMoralisWeb3Api } from 'react-moralis'
 import { Avatar } from '../components/Avatar'
 import Dashboard from '../components/Dashboard'
+import Layout from '../components/Layout'
 import { Login } from '../components/Login'
 import Nfts from '../components/Nfts'
 
@@ -21,7 +22,7 @@ export default function Home() {
 
 
   return (
-    <div className="">
+    <Layout>
       <Head>
         <title>Casavax - Home of Avax</title>
         <link rel="icon" href="/favicon.ico" />
@@ -39,7 +40,7 @@ export default function Home() {
         </div>
         <Dashboard />
       </div>
-    </div>
+    </Layout>
   )
 }
 
