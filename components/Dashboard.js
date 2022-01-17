@@ -10,6 +10,8 @@ const Dashboard = () => {
   const [saveLoading, setSaveLoading] = useState(false)
   const [selectNft, setSelectNft] = useState([])
 
+  const username = user.get('username')
+
 
   const { data, isLoading, error } = useMoralisQuery(
     'Pages',
@@ -25,7 +27,8 @@ const Dashboard = () => {
     {
       link: '',
       about: '',
-      NFTs: []
+      NFTs: [],
+      avatar: `https://avatars.dicebear.com/api/identicon/${username}.svg`
     }
   )
 
@@ -34,7 +37,7 @@ const Dashboard = () => {
       let fetchedData = {
         link: data[0]?.attributes.link,
         about: data[0]?.attributes.about,
-        NFTs: data[0]?.attributes.NFTs
+        NFTs: data[0]?.attributes.NFTs,
       }
 
       setDashboardInput(fetchedData)
@@ -66,6 +69,7 @@ const Dashboard = () => {
           about: dashboardInput.about,
           NFTs: dashboardInput.NFTs,
           ethAddress: user.get("ethAddress"),
+          avatar: dashboardInput.avatar
         }).then(() => {
           setSaveLoading(true)
         }).catch(error => {
@@ -75,6 +79,12 @@ const Dashboard = () => {
           loading: 'Saving...',
           success: <b>Settings saved!</b>,
           error: <b>Could not save.</b>,
+        },
+        {
+          style: {
+            borderRadius: '50px',
+            padding: '10px 15px 10px 15px',
+          }
         }
       )
     } else {
@@ -86,12 +96,19 @@ const Dashboard = () => {
       page.set("link", dashboardInput.link)
       page.set("about", dashboardInput.about)
       page.set("NFTs", dashboardInput.NFTs)
+      page.set("avatar", dashboardInput.avatar)
       toast.promise(
         page.save().then(() => setSaveLoading(true)),
         {
           loading: 'Saving...',
           success: <b>Settings saved!</b>,
           error: <b>Could not save.</b>,
+        },
+        {
+          style: {
+            borderRadius: '50px',
+            padding: '10px 15px 10px 15px',
+          }
         }
       )
     }

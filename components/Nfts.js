@@ -58,7 +58,7 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                               }}
                               src={nft.image}
                               id={`select-${index}`}
-                              className={`bg-white object-contain h-48 w-48 hover:shadow-xl ${dashboardInput.NFTs.includes(nft?.image) ? "border-2 border-indigo-600" : "border-2 border-black"}`}
+                              className={`bg-white object-contain h-48 w-48 hover:shadow-2xl ${dashboardInput.NFTs.includes(nft?.image) ? "border-2 border-indigo-600" : "border-2 border-black"}`}
                               onError={(e) => {
                                 e.target.style.display = 'none'
                                 // e.currentTarget.onerror = null
