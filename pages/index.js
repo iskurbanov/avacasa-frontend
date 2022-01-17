@@ -12,13 +12,6 @@ import Nfts from '../components/Nfts'
 
 export default function Home() {
   const { refetchUserData, user, isAuthenticated, account } = useMoralis()
-  
-
-  useEffect(() => {
-    // window.location.reload(false);
-  }, [user])
-
-  if (!isAuthenticated) return <Login />
 
 
   return (
@@ -27,19 +20,23 @@ export default function Home() {
         <title>Casavax - Home of Avax</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <div className="max-w-4xl mx-auto px-8">
-        <h2 className="text-3xl text-center mt-16">Welcome to your Dashboard!</h2>
-        <div className="md:flex md:flex-row py-12 flex flex-col justify-center items-center">
-          <div className="relative h-8 w-8">
-            <Avatar />
+      {
+        !isAuthenticated ? <Login />
+          :
+          <div className="max-w-4xl mx-auto px-8">
+            <h2 className="text-3xl text-center mt-16">Welcome to your Dashboard!</h2>
+            <div className="md:flex md:flex-row py-12 flex flex-col justify-center items-center">
+              <div className="relative h-8 w-8">
+                <Avatar />
+              </div>
+              <h1 className="md:text-xl text-center md:pl-4">
+                {user.get("ethAddress")}
+              </h1>
+            </div>
+            <Dashboard />
           </div>
-          <h1 className="md:text-xl text-center md:pl-4">
-            {user.get("ethAddress")}
-          </h1>
-        </div>
-        <Dashboard />
-      </div>
+      }
+
     </Layout>
   )
 }

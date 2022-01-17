@@ -4,7 +4,7 @@ import { ByMoralis } from "react-moralis"
 
 const Layout = ({ children, type }) => {
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-[#fff8ea]">
+    <div className="flex flex-col justify-between min-h-screen">
       {
         type !== 'no-wrap' ?
           (
