@@ -16,7 +16,7 @@ export default function Header() {
   const { user, isAuthenticated, isAuthenticating, logout, authenticate } = useMoralis()
 
   return (
-    <Disclosure as="nav" className="bg-white shadow mt-8 rounded-full sticky top-8 left-0 right-0 z-50 max-w-5xl mx-auto w-full">
+    <Disclosure as="nav" className="bg-white/30 backdrop-blur-sm shadow mt-8 rounded-full sticky top-8 left-0 right-0 z-50 max-w-5xl mx-auto w-full">
       {({ open }) => (
         <>
           <div className="px-4 sm:px-6 lg:px-8">

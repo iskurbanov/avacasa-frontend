@@ -2,13 +2,11 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useMoralis, useMoralisQuery } from "react-moralis"
 import toast, { Toaster } from 'react-hot-toast';
-import { Avatar } from "./Avatar"
 import Nfts from "./Nfts"
 
 const Dashboard = () => {
   const { user, Moralis } = useMoralis()
   const [saveLoading, setSaveLoading] = useState(false)
-  const [selectNft, setSelectNft] = useState([])
 
   const username = user.get('username')
 
