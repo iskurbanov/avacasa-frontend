@@ -42,7 +42,7 @@ export default function UserAddress({ userAddress }) {
     <div className="relative bg-stone-50">
       {
         data[0]?.attributes.ethAddress && data[0]?.attributes.ethAddress === user?.get("ethAddress") &&
-        <div className="max-w-6xl mx-auto px-5 h-8 bg-indigo-600 text-white font-semibold flex items-center justify-between">
+        <div className="full mx-auto px-5 h-8 bg-indigo-600 text-white font-semibold flex items-center justify-between">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
