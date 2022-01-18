@@ -5,7 +5,7 @@ export const Login = () => {
   const { authenticate, isAuthenticating } = useMoralis()
 
   return (
-    <div className="relative max-w-4xl m-auto mt-48 mb-64">
+    <div className="relative max-w-4xl m-auto mt-48 mb-64 h-full">
       <div className="absolute -top-96 -left-64 bg-lime-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 -left-48 bg-emerald-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>
       <div className="absolute -top-80 -right-48 bg-blue-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>

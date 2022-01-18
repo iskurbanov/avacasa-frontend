@@ -4,14 +4,14 @@ import { ByMoralis } from "react-moralis"
 
 const Layout = ({ children, type }) => {
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between box-content overflow-x-hidden">
       {
         type !== 'no-wrap' ?
           (
-            <div>
+            <>
               < Header />
 
-              <main>
+              <main className="">
                 {children}
               </main>
 
@@ -21,7 +21,7 @@ const Layout = ({ children, type }) => {
                 </div>
                 <ByMoralis variant="dark" width={180} style={{ marginLeft: "auto", marginRight: "auto" }} />
               </footer>
-            </div>
+            </>
           )
           :
           <div>
