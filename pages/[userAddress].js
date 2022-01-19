@@ -42,7 +42,7 @@ export default function UserAddress({ userAddress }) {
     <div className="relative bg-stone-50">
       {
         data[0]?.attributes.ethAddress && data[0]?.attributes.ethAddress === user?.get("ethAddress") &&
-        <div className="full mx-auto px-5 h-8 bg-indigo-600 text-white font-semibold flex items-center justify-between">
+        <div className="full mx-auto px-5 h-8 bg-black text-white font-semibold flex items-center justify-between">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,7 +73,7 @@ export default function UserAddress({ userAddress }) {
           <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.link}</h1>
           <pre className="text-gray-600">{data[0]?.attributes.about}</pre>
         </div>
-        <h2 className="mt-8 mb-1 pl-12 font-semibold text-2xl">My NFT Collection</h2>
+        <h2 className="mt-8 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
         <div className="rounded-3xl mx-auto w-full p-8">
           <div className="flex flex-col md:flex-row justify-start gap-4">
             {

@@ -40,17 +40,16 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
             <h2 className="">
               Choose which of your NFTs you want to display!
             </h2>
-            <div className="flex">
+            <div className="flex pt-5">
               {
                 NFTBalances?.result &&
                 NFTBalances.result.map((nft, index) => {
                   nft = verifyMetadata(nft)
                   return (
                     <div key={index} className="relative" >
-                      <div className="">
                         {
                           nft.image ?
-                            <div className="rounded-2xl shadow h-64 flex flex-col items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                            <div className="shadow h-64 flex flex-col items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
                               <img
                                 onClick={(e) => {
                                   handleSelectNft(nft.image)
@@ -59,7 +58,7 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                                 onLoad={() => setLoading(false)}
                                 src={nft.image}
                                 id={`select-${index}`}
-                                className={`w-64 h-64 ${loading ? "hidden" : "inline-block"} mr-1 ${dashboardInput.NFTs.includes(nft?.image) ? "border-2 border-indigo-600" : "border-2 border-black"}`}
+                                className={`w-64 h-64 ${loading ? "hidden" : "inline-block"} mr-1 ${dashboardInput.NFTs.includes(nft?.image) ? "border-2 border-black" : "border-2 border-gray-400"}`}
                                 onError={(e) => {
                                   e.target.style.display = 'none'
                                   // e.currentTarget.onerror = null
@@ -69,7 +68,7 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                               {
                                 dashboardInput.NFTs.includes(nft?.image) &&
                                 <div className="absolute top-1 left-2">
-                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                   </svg>
                                 </div>
@@ -78,7 +77,6 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                             :
                             null
                         }
-                      </div>
                     </div>
                   )
                 })

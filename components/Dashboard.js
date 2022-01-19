@@ -144,7 +144,7 @@ const Dashboard = () => {
                       autoComplete="username"
                       value={dashboardInput.link}
                       onChange={e => handleChangeInput(e)}
-                      className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                      className="flex-1 block w-full focus:ring-black focus:border-black min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                     />
                   </div>
                 </div>
@@ -159,7 +159,7 @@ const Dashboard = () => {
                     id="about"
                     name="about"
                     rows={3}
-                    className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                    className="max-w-lg shadow-sm block w-full focus:ring-black focus:border-black sm:text-sm border border-gray-300 rounded-md"
                     value={dashboardInput.about}
                     onChange={e => handleChangeInput(e)}
                   />
@@ -226,7 +226,7 @@ const Dashboard = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               disabled={!data[0]}
             >
               <Link href={`/${data[0]?.attributes.link}`}>
@@ -237,7 +237,7 @@ const Dashboard = () => {
               onClick={saveDashboard}
               type="submit"
               disabled={saveLoading}
-              className={`ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${saveLoading ? "bg-gray-400" : "bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"} `}
+              className={`ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${saveLoading ? "bg-gray-400" : "bg-black hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"} `}
             >
               {saveLoading ? "Saved!" : "Save"}
             </button>
