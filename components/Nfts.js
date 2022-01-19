@@ -15,16 +15,26 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
   }, [data])
 
 
-  const handleSelectNft = (imageSrc) => {
-    const nftImages = dashboardInput.NFTs
+  const handleSelectNft = (selectedNFT) => {
+    const currentNFTs = dashboardInput.NFTs
 
-    if (nftImages?.includes(imageSrc)) {
-      nftImages.splice(nftImages.indexOf(imageSrc), 1)
+
+
+    if (currentNFTs?.some(item => item["image"] === selectedNFT.image)) {
+      currentNFTs.splice(currentNFTs.indexOf(selectedNFT), 1)
     } else {
-      nftImages.push(imageSrc)
+      currentNFTs.push(selectedNFT)
     }
 
-    setDashboardInput({ ...dashboardInput, NFTs: nftImages })
+    console.log(currentNFTs)
+
+    // if (currentNFTs?.includes(selectedNFT)) {
+    //   currentNFTs.splice(currentNFTs.indexOf(selectedNFT), 1)
+    // } else {
+    //   currentNFTs.push(selectedNFT)
+    // }
+
+    setDashboardInput({ ...dashboardInput, NFTs: currentNFTs })
     setSaveLoading(false)
   }
 
@@ -47,36 +57,36 @@ const Nfts = ({ dashboardInput, setDashboardInput, data, setSaveLoading }) => {
                   nft = verifyMetadata(nft)
                   return (
                     <div key={index} className="relative" >
-                        {
-                          nft.image ?
-                            <div className="shadow h-64 flex flex-col items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
-                              <img
-                                onClick={(e) => {
-                                  handleSelectNft(nft.image)
-                                  setChosen({ ...chosen })
-                                }}
-                                onLoad={() => setLoading(false)}
-                                src={nft.image}
-                                id={`select-${index}`}
-                                className={`w-64 h-64 ${loading ? "hidden" : "inline-block"} mr-1 ${dashboardInput.NFTs.includes(nft?.image) ? "border-2 border-black" : "border-2 border-gray-400"}`}
-                                onError={(e) => {
-                                  e.target.style.display = 'none'
-                                  // e.currentTarget.onerror = null
-                                  // e.currentTarget.src = "https://cdn.shopify.com/s/files/1/2618/8176/files/no-image-found.png?v=3919685981083119590"
-                                }}
-                              />
-                              {
-                                dashboardInput.NFTs.includes(nft?.image) &&
-                                <div className="absolute top-1 left-2">
-                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                                </div>
-                              }
-                            </div>
-                            :
-                            null
-                        }
+                      {
+                        nft.image ?
+                          <div className="shadow h-64 flex flex-col items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                            <img
+                              onClick={(e) => {
+                                handleSelectNft(nft)
+                                setChosen({ ...chosen })
+                              }}
+                              onLoad={() => setLoading(false)}
+                              src={nft.image}
+                              id={`select-${index}`}
+                              className={`w-64 h-64 ${loading ? "hidden" : "inline-block"} mr-1 ${dashboardInput.NFTs.some(item => item["image"] === nft?.image) ? "border-2 border-black" : "border-2 border-gray-400"}`}
+                              onError={(e) => {
+                                e.target.style.display = 'none'
+                                // e.currentTarget.onerror = null
+                                // e.currentTarget.src = "https://cdn.shopify.com/s/files/1/2618/8176/files/no-image-found.png?v=3919685981083119590"
+                              }}
+                            />
+                            {
+                              dashboardInput.NFTs.some(item => item["image"] === nft?.image) &&
+                              <div className="absolute top-1 left-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                              </div>
+                            }
+                          </div>
+                          :
+                          null
+                      }
                     </div>
                   )
                 })

@@ -37,6 +37,8 @@ export default function UserAddress({ userAddress }) {
     </div>
   )
 
+  console.log(data)
+
 
   return (
     <div className="relative bg-stone-50">
@@ -73,15 +75,15 @@ export default function UserAddress({ userAddress }) {
           <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.link}</h1>
           <pre className="text-gray-600">{data[0]?.attributes.about}</pre>
         </div>
-        <h2 className="mt-8 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
+        <h2 className="mt-2 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
         <div className="rounded-3xl mx-auto w-full p-8">
           <div className="flex flex-col md:flex-row justify-start gap-4">
             {
               data[0]?.attributes.NFTs.map(item => (
-                <div key={item} className="rounded-2xl bg-white shadow min-w-64 h-80 flex flex-col gap-1.5 items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
-                  <img className="max-h-64" src={item} />
-                  <p className="text-gray-500 text-left w-full pl-4">Name of Collection</p>
-                  <h3 className="font-semibold text-xl text-left w-full pl-4">Name of NFT</h3>
+                <div key={item.image} className="rounded-2xl bg-white shadow min-w-64 h-80 flex flex-col gap-1.5 items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                  <img className="max-h-64" src={item.image} />
+                  {/* <p className="text-gray-500 text-left w-full pl-4">{item.metadata.description}</p> */}
+                  <h3 className="font-semibold text-xl text-left w-full pl-4 pt-4">{item.metadata.name}</h3>
                 </div>
               ))
             }

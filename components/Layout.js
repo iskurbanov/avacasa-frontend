@@ -1,5 +1,6 @@
 import Header from './Header'
 import { ByMoralis } from "react-moralis"
+import Footer from './Footer'
 
 
 const Layout = ({ children, type }) => {
@@ -15,12 +16,7 @@ const Layout = ({ children, type }) => {
                 {children}
               </main>
 
-              <footer>
-                <div className="border-y border-gray-200 py-8 mb-8 text-center">
-                  Copyright Casavax.com 2022
-                </div>
-                <ByMoralis variant="dark" width={180} style={{ marginLeft: "auto", marginRight: "auto" }} />
-              </footer>
+              <Footer />
             </>
           )
           :
