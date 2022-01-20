@@ -65,7 +65,7 @@ export default function UserAddress({ userAddress }) {
         </button>
       } */}
       <div className="relative w-full h-64 rounded-b-md">
-        <Image src="/Portage.jpg" layout="fill" className="rounded-b-3xl" />
+        <Image src="/Portage.jpg" layout="fill" className="rounded-b-3xl" priority/>
         <div className="rounded-full flex justify-center md:justify-start w-full md:w-48 h-48 absolute -bottom-24 left-0 md:left-24 right-0">
           <img className="bg-white rounded-full object-cover h-48 w-48 border-white border-4" src={data[0]?.attributes.avatar} />
         </div>
@@ -80,10 +80,12 @@ export default function UserAddress({ userAddress }) {
           <div className="flex flex-col md:flex-row justify-start gap-4">
             {
               data[0]?.attributes.NFTs.map(item => (
-                <div key={item.image} className="rounded-2xl bg-white shadow min-w-64 h-80 flex flex-col gap-1.5 items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
-                  <img className="max-h-64" src={item.image} />
-                  {/* <p className="text-gray-500 text-left w-full pl-4">{item.metadata.description}</p> */}
-                  <h3 className="font-semibold text-xl text-left w-full pl-4 pt-4">{item.metadata.name}</h3>
+                <div key={item.image} className="rounded-2xl bg-white shadow min-w-64 h-80 flex flex-col items-center justify-start hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                  <img className="max-h-64 h-64 w-64 rounded-2xl" src={item.image} />
+                  <div className="flex items-center justify-center h-full">
+                    {/* <p className="text-gray-500 text-left w-full pl-4">{item.metadata.description}</p> */}
+                    <h3 className="font-semibold text-xl text-left w-full">{item.metadata.name}</h3>
+                  </div>
                 </div>
               ))
             }
