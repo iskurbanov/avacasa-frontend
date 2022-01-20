@@ -8,10 +8,10 @@ export const Login = () => {
   return (
     <div className="">
       <div className="relative max-w-4xl m-auto my-36 md:my-48 h-full">
-        <div className="absolute -top-96 -left-64 bg-lime-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute bottom-0 -left-48 bg-emerald-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute -top-80 -right-48 bg-blue-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute -top-0 -right-48 bg-fuchsia-50 h-96 w-96 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute -top-96 -left-64 bg-lime-50 h-96 w-96 rounded-full blur-3xl -z-10 animate-bounce"></div>
+        <div className="absolute bottom-0 -left-48 bg-emerald-50 h-96 w-96 rounded-full blur-3xl -z-10 animate-bounce"></div>
+        <div className="absolute -top-80 -right-48 bg-blue-50 h-96 w-96 rounded-full blur-3xl -z-10 animate-bounce"></div>
+        <div className="absolute -top-0 -right-48 bg-fuchsia-50 h-96 w-96 rounded-full blur-3xl -z-10 animate-bounce"></div>
         <div className="flex flex-col w-full items-center justify-center space-y-4 relative">
           <p className="text-pink-600 font-bold">Introducing</p>
           <h1 className="text-4xl px-8 text-center md:text-5xl font-bold">The Crypto-Native Homepage for the Avalanche Community</h1>

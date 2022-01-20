@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useMoralis } from "react-moralis"
 
 const Footer = () => {
@@ -24,14 +25,18 @@ const Footer = () => {
         }
         <div className="lg:flex lg:items-center lg:justify-between">
           <div>
-            <img className="w-auto h-8 mx-auto lg:mx-0" src="/logo.png" alt="" />
+            <Link href="/">
+              <img className="w-auto h-8 mx-auto lg:mx-0 cursor-pointer" src="/logo.png" alt="" />
+            </Link>
           </div>
 
           <ul className="flex items-center justify-center mt-8 space-x-6 sm:mt-12 sm:space-x-16 lg:mt-0">
             <li>
-              <a href="#" title="" className="text-lg font-medium text-gray-900 transition-all duration-200 font-pj hover:text-gray-600">
-                About
-              </a>
+              <Link href="/company/team" >
+                <a href="#" title="" className="text-lg font-medium text-gray-900 transition-all duration-200 font-pj hover:text-gray-600">
+                  Team
+                </a>
+              </Link>
             </li>
 
             <li>
