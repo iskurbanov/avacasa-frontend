@@ -1,5 +1,7 @@
 import Image from "next/image"
 import { useMoralis } from "react-moralis"
+import Features from "./Features"
+import ImageText from "./ImageText"
 import Steps from "./Steps"
 
 export const Login = () => {
@@ -29,6 +31,8 @@ export const Login = () => {
         </div>
       </div>
       <Steps />
+      <Features />
+      <ImageText />
     </div>
   )
 }

@@ -2,16 +2,16 @@ import Link from "next/link"
 import { useMoralis } from "react-moralis"
 
 const Footer = () => {
-  const { authenticate, isAuthenticating } = useMoralis()
+  const { authenticate, isAuthenticating, isAuthenticated } = useMoralis()
 
   return (
     <footer className="py-12 bg-white sm:pt-16 lg:pt-20">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        {!authenticate &&
-          <div className="">
+        {!isAuthenticated &&
+          <div className="pb-12">
             <div className="max-w-3xl mx-auto text-center">
-              <h5 className="text-2xl font-bold text-gray-900 sm:text-3xl xl:text-5xl w-full">
-                Claim your Profile now! It only takes a few minutes!
+              <h5 className="text-2xl font-bold text-gray-900 sm:text-2xl xl:text-3xl w-full">
+                Claim your Profile now!
               </h5>
 
             </div>
