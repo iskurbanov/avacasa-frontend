@@ -5,7 +5,7 @@ import { useMoralis, useMoralisQuery } from 'react-moralis'
 
 export default function UserAddress({ userAddress }) {
   const [loading, setLoading] = useState(true)
-  const { user, logout } = useMoralis()
+  const { user, logout, Moralis, authenticate, isAuthenticating, isAuthenticated } = useMoralis()
 
   const { data, error, isLoading, isFetching } = useMoralisQuery(
     'Pages',
@@ -22,6 +22,10 @@ export default function UserAddress({ userAddress }) {
       live: true
     }
   )
+
+  const sendAvax = () => {
+    console.log("send!")
+  }
 
   useEffect(() => {
     if (data[0]?.attributes.link) setLoading(false)
@@ -56,22 +60,73 @@ export default function UserAddress({ userAddress }) {
           </div>
         </div>
       }
-      {
+      {/* {
         !user &&
         <button className="fixed top-0 right-0 z-50 rounded-full w-24 h-12 bg-black text-white m-4 shadow">
           Donate
         </button>
-      }
+      } */}
       <div className="relative w-full h-64 rounded-b-md">
         <Image src="/Portage.jpg" layout="fill" className="rounded-b-3xl" priority />
-        <div className="rounded-full flex justify-center md:justify-start w-full md:w-48 h-48 absolute -bottom-24 left-0 md:left-24 right-0">
+        <div className="rounded-full flex justify-center w-full h-48 absolute -bottom-24 left-0 right-0">
           <img className="bg-white rounded-full object-cover h-48 w-48 border-white border-4" src={data[0]?.attributes.avatar} />
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="rounded-3xl mx-auto w-full h-64 p-8 mt-24">
-          <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.link}</h1>
-          <pre className="text-gray-600">{data[0]?.attributes.about}</pre>
+        <div className="flex flex-col mt-24 sm:flex-row">
+          <div className="rounded-3xl mx-auto w-full h-64 p-8">
+            <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.link}</h1>
+            <pre className="text-gray-600">{data[0]?.attributes.about}</pre>
+          </div>
+          {
+            user?.attributes.ethAddress !== userAddress &&
+            <div className="px-4 md:px-0 mb-16 md:mb-0">
+              <div className="flex flex-col justify-around rounded-3xl w-full sm:w-80 min-w-64 bg-white border-2 border-black text-black sm:m-4 shadow-xl text-center py-4">
+                Send me AVAX
+                <div className="flex justify-between px-2 py-2 divide-y">
+                  <div className="border border-gray-300 bg-white rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-black focus-within:border-black w-16 mr-6">
+                    <label htmlFor="name" className="block text-xs font-medium text-gray-900">
+                      AVAX
+                    </label>
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      className="block text-center w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                      placeholder="1.0"
+                    />
+                  </div>
+                  {
+                    !isAuthenticated ?
+                      <button onClick={authenticate} className="bg-black text-white p-4 rounded-xl flex">
+                        {
+                          !isAuthenticating ?
+                            <span className='mr-3'>Sign in to send</span>
+                            :
+                            <span className='mr-3'>Authenticating...</span>
+                        }
+                        <Image src="/metamask.png" height={20} width={20} />
+                      </button>
+                      :
+                      <button onClick={sendAvax} className="bg-black text-white p-4 rounded-xl flex">
+                        Send
+                      </button>
+                  }
+                </div>
+                <div className="border-b-2">
+                  Recently sent
+                </div>
+                <div className="flex flex-col divide-y">
+                  <div className="flex px-4 py-0.5">
+                    1.2 AVAX from 0x67a...h391
+                  </div>
+                  <div className="flex px-4 py-0.5">
+                    2 AVAX from 0x488...a983
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
         </div>
         <h2 className="mt-2 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
         <div className="rounded-3xl mx-auto w-full p-8">
