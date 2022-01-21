@@ -50,6 +50,7 @@ const team = () => {
                 <p className="mt-2 text-base font-normal text-gray-600 font-pj">
                   Co-founder, Software Developer
                 </p>
+                <div className="">Twitter: @iskurbanov</div>
             </div>
           </div>
         </div>
