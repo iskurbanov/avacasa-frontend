@@ -40,16 +40,11 @@ const Footer = () => {
             </li>
 
             <li>
-              <a href="#" title="" className="text-lg font-medium text-gray-900 transition-all duration-200 font-pj hover:text-gray-600">
-                Features
+              <a href="mailto:iskurbanov@gmail.com" className="text-lg font-medium text-gray-900 transition-all duration-200 font-pj hover:text-gray-600">
+                Contact
               </a>
             </li>
 
-            <li>
-              <a href="#" title="" className="text-lg font-medium text-gray-900 transition-all duration-200 font-pj hover:text-gray-600">
-                How it works
-              </a>
-            </li>
           </ul>
 
           {/* <ul className="flex items-center justify-center mt-8 space-x-3 sm:mt-12 lg:justify-end lg:mt-0">
