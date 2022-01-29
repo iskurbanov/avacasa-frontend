@@ -8,7 +8,7 @@ const Steps = () => {
               How it works
             </h2>
             <p className="max-w-md mx-auto mt-5 text-base font-normal text-gray-600 font-pj">
-              The quickest way to improve engagement with your audience. Share specific NFTs and articles, collect payments.
+              The quickest way to sell your NFTs directly to your audience. Curate collections and set custom prices.
             </p>
           </div>
 
@@ -19,7 +19,7 @@ const Steps = () => {
                   1
                 </div>
                 <p className="mt-5 text-xl font-medium text-gray-900 font-pj">
-                  Claim your Profile using your Metamask wallet.
+                  Claim your Shop link using your Metamask wallet.
                 </p>
               </div>
             </div>
@@ -60,7 +60,7 @@ const Steps = () => {
                     2
                   </div>
                   <p className="mt-5 text-xl font-medium text-gray-900 font-pj">
-                    Select which NFTs you want to display, add your social links, and any information about you.
+                    Select which NFTs you want to sell and set the price.
                   </p>
                 </div>
               </div>
@@ -97,7 +97,7 @@ const Steps = () => {
                   3
                 </div>
                 <p className="mt-5 text-xl font-medium text-gray-900 font-pj">
-                  Share your profile link and collect payments from your audience!
+                  Share your shop's link with your audience and take payments!
                 </p>
               </div>
             </div>

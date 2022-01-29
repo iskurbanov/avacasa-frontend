@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="pb-12">
             <div className="max-w-3xl mx-auto text-center">
               <h5 className="text-2xl font-bold text-gray-900 sm:text-2xl xl:text-3xl w-full">
-                Claim your Profile now!
+                Claim your Shop now!
               </h5>
 
             </div>
@@ -102,7 +102,7 @@ const Footer = () => {
           </ul> */}
 
           <p className="mt-8 text-base font-normal text-center text-gray-600 md:mt-0 md:order-1 w-full">
-            © Copyright 2021, All Rights Reserved
+            © AvaCasa 2022, All Rights Reserved
           </p>
         </div>
       </div>

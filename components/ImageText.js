@@ -11,7 +11,7 @@ const ImageText = () => {
                 Coming Soon!
               </h2>
               <p className="mt-4 text-lg text-gray-700 sm:mt-8 font-pj">
-                Mint your own personal NFT's right from your dashboard! <br /><br />Let your loyal fan base take part in your growth and give them the ability to trade access to your exclusive content. You get 10% from each sale.
+                Mint your own personal NFT's right from your dashboard! <br /><br />Let your loyal fan base take part in your growth and give them the ability to trade access to your exclusive content. You get 10% from each transaction after the first sale!
               </p>
             </div>
 

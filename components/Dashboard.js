@@ -1,12 +1,22 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useMoralis, useMoralisQuery } from "react-moralis"
+import { useMoralis, useMoralisQuery, useNFTBalances } from "react-moralis"
 import toast, { Toaster } from 'react-hot-toast';
 import Nfts from "./Nfts"
+import MoralisNfts from "./MoralisNfts";
 
 const Dashboard = () => {
   const { user, Moralis } = useMoralis()
   const [saveLoading, setSaveLoading] = useState(false)
+  const [available, setAvailable] = useState(false)
+  const [dashboardInput, setDashboardInput] = useState(
+    {
+      link: '',
+      about: '',
+      NFTs: [],
+      avatar: `https://avatars.dicebear.com/api/identicon/${username}.svg`
+    }
+  )
 
   const username = user.get('username')
 
@@ -21,14 +31,28 @@ const Dashboard = () => {
     }
   )
 
-  const [dashboardInput, setDashboardInput] = useState(
-    {
-      link: '',
-      about: '',
-      NFTs: [],
-      avatar: `https://avatars.dicebear.com/api/identicon/${username}.svg`
-    }
+  const { data: linkResult } = useMoralisQuery(
+    'Pages',
+    query =>
+      query
+        .equalTo("link", dashboardInput.link),
+    [dashboardInput.link],
   )
+
+  console.log(linkResult)
+
+
+  useEffect(() => {
+    if (dashboardInput.link === linkResult[0]?.attributes.link) {
+      if (data[0]?.attributes.link === linkResult[0]?.attributes.link) {
+        setAvailable(true)
+      } else {
+        setAvailable(false)
+      }
+    } else {
+      setAvailable(true)
+    }
+  }, [linkResult])
 
   useEffect(() => {
     if (!isLoading && data[0]) {
@@ -116,7 +140,7 @@ const Dashboard = () => {
     <div className="max-w-4xl m-auto pb-16">
       <Toaster position="bottom-center" />
       <form className="space-y-8 divide-y divide-gray-200">
-        <Nfts dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} />
+
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
             <div>
@@ -147,6 +171,18 @@ const Dashboard = () => {
                       className="flex-1 block w-full focus:ring-black focus:border-black min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                     />
                   </div>
+                  {
+
+                  }
+                  {
+                    available ?
+                      (
+                        dashboardInput.link === linkResult[0]?.attributes.link ?
+                          <p className="text-green-600">Your current</p> :
+                          <p className="text-green-600">Link address available!</p>
+                      ) :
+                      <p className="text-red-600">Link address already taken!</p>
+                  }
                 </div>
               </div>
 
@@ -166,68 +202,17 @@ const Dashboard = () => {
                   <p className="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
                 </div>
               </div>
-
-              {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
-                <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
-                  Photo
-                </label>
-                <div className="mt-1 sm:mt-0 sm:col-span-2">
-                  <div className="flex items-center">
-                    <div className="relative h-16 w-16">
-                      <Avatar />
-                    </div>
-                    <button
-                      type="button"
-                      className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Change
-                    </button>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
-
-          {/* <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-            <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Profile Links</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Add your favorite articles, websites, projects you invest in, or anything links to anything else!</p>
-            </div>
-            <div className="flex">
-              <div className="border border-gray-300 bg-white rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600 w-1/3 mr-6">
-                <label htmlFor="name" className="block text-xs font-medium text-gray-900">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-                  placeholder="Trading strategy..."
-                />
-              </div>
-              <div className="border border-gray-300 bg-white rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600 w-1/3">
-                <label htmlFor="name" className="block text-xs font-medium text-gray-900">
-                  URL
-                </label>
-                <input
-                  type="text"
-                  name="url"
-                  id="url"
-                  className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-                  placeholder="https://tradingview.com"
-                />
-              </div>
-            </div>
-          </div> */}
         </div>
-
+        {/* <Nfts dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} userAddress={user.get("ethAddress")} /> */}
+        <MoralisNfts dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} userAddress={user.get("ethAddress")} />
         <div className="pt-5">
           <div className="flex justify-end">
             <button
               type="button"
               className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-              disabled={!data[0]}
+              disabled={!data[0] || saveLoading}
             >
               <Link href={`/${data[0]?.attributes.link}`}>
                 View Your Page
@@ -236,8 +221,8 @@ const Dashboard = () => {
             <button
               onClick={saveDashboard}
               type="submit"
-              disabled={saveLoading}
-              className={`ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${saveLoading ? "bg-gray-400" : "bg-black hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"} `}
+              disabled={saveLoading || !available}
+              className={`ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${saveLoading || !available ? "bg-gray-400" : "bg-black hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"} `}
             >
               {saveLoading ? "Saved!" : "Save"}
             </button>

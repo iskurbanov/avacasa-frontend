@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>Casavax - Home of Avax</title>
+        <title>AvaCasa - Home of Avax</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {

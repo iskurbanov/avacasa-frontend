@@ -17,7 +17,7 @@ export const useVerifyMetadata = () => {
      */
     function verifyMetadata(NFT) {
         //Pass Through if Metadata already present
-        if (NFT.metadata) return NFT;
+        if (NFT?.metadata) return NFT;
         //Get the Metadata
         getMetadata(NFT);
         //Return Hooked NFT Object
@@ -33,7 +33,7 @@ export const useVerifyMetadata = () => {
     async function getMetadata(NFT) {
         //Validate URI
         if (!NFT.token_uri || !NFT.token_uri.includes('://')) {
-            console.log('getMetadata() Invalid URI', { URI: NFT.token_uri, NFT });
+            // console.log('getMetadata() Invalid URI', { URI: NFT.token_uri, NFT });
             return;
         }
         //Get Metadata
@@ -42,12 +42,12 @@ export const useVerifyMetadata = () => {
             .then(metadata => {
                 if (!metadata) {
                     //Log
-                    console.error("useVerifyMetadata.getMetadata() No Metadata found on URI:", { URI: NFT.token_uri, NFT });
+                    // console.error("useVerifyMetadata.getMetadata() No Metadata found on URI:", { URI: NFT.token_uri, NFT });
                 }
                 //Handle Setbacks
                 else if (metadata?.detail && metadata.detail.includes("Request was throttled")) {
                     //Log
-                    console.warn("useVerifyMetadata.getMetadata() Bad Result for:" + NFT.token_uri + "  Will retry later", { results, metadata });
+                    // console.warn("useVerifyMetadata.getMetadata() Bad Result for:" + NFT.token_uri + "  Will retry later", { results, metadata });
                     //Retry That Again after 1s
                     setTimeout(function () { getMetadata(NFT); }, 1000);
                 }//Handle Opensea's {detail: "Request was throttled. Expected available in 1 second."}
@@ -59,7 +59,7 @@ export const useVerifyMetadata = () => {
                 }//Valid Result
             })
             .catch(err => {
-                console.error("useVerifyMetadata.getMetadata() Error Caught:", { err, NFT, URI: NFT.token_uri });
+                // console.error("useVerifyMetadata.getMetadata() Error Caught:", { err, NFT, URI: NFT.token_uri });
             });
     }//getMetadata()
 

@@ -7,10 +7,10 @@ const Features = () => {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-left sm:mx-auto sm:text-center lg:max-w-2xl">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj">
-              Why limit your interractions to Twitter or Discord?
+              Why send all your traffic to an NFT marketplace?
             </h2>
             <p className="mt-4 text-lg text-gray-700 md:max-w-md md:mx-auto sm:mt-6 font-pj">
-              Share your favorite articles, ideas, and NFTs on your own page! 
+              AvaCasa allows you to control the sales process and currate your NFTs.
             </p>
           </div>
 
@@ -31,7 +31,7 @@ const Features = () => {
                         Reduce Friction
                       </h3>
                       <p className="mt-3 text-base text-gray-900 font-pj">
-                        AvaCasa makes sending AVAX to your favorite creators EASY!
+                        Easy set up your shop and start selling in as little as 5 minutes!
                       </p>
                     </div>
                   </div>
@@ -46,10 +46,10 @@ const Features = () => {
                     </svg>
                     <div className="ml-5">
                       <h3 className="text-lg font-bold text-gray-900 font-pj">
-                        Set up in Seconds
+                        Seamless experience
                       </h3>
                       <p className="mt-3 text-base text-gray-900 font-pj">
-                        Automatically pull in your NFT data to use on your page.
+                        We automatically pull in your NFT data and take care of all the technical details.
                       </p>
                     </div>
                   </div>

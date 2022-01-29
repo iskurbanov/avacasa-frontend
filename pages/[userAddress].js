@@ -2,10 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useMoralis, useMoralisQuery } from 'react-moralis'
+import Modal from '../components/Modal'
 
 export default function UserAddress({ userAddress }) {
   const [loading, setLoading] = useState(true)
   const { user, logout, Moralis, authenticate, isAuthenticating, isAuthenticated } = useMoralis()
+  const [open, setOpen] = useState(false)
+  const [modalData, setModalData] = useState({})
 
   const { data, error, isLoading, isFetching } = useMoralisQuery(
     'Pages',
@@ -23,10 +26,6 @@ export default function UserAddress({ userAddress }) {
     }
   )
 
-  const sendAvax = () => {
-    console.log("send!")
-  }
-
   useEffect(() => {
     if (data[0]?.attributes.link) setLoading(false)
   }, [data])
@@ -42,8 +41,14 @@ export default function UserAddress({ userAddress }) {
   )
 
 
+  const openModal = (data) => {
+    setOpen(true)
+    setModalData(data)
+  }
+
   return (
     <div className="relative bg-stone-50">
+      <Modal open={open} setOpen={setOpen} modalData={modalData} />
       {
         data[0]?.attributes.ethAddress && data[0]?.attributes.ethAddress === user?.get("ethAddress") &&
         <div className="full mx-auto px-5 h-8 bg-black text-white font-semibold flex items-center justify-between">
@@ -60,12 +65,6 @@ export default function UserAddress({ userAddress }) {
           </div>
         </div>
       }
-      {/* {
-        !user &&
-        <button className="fixed top-0 right-0 z-50 rounded-full w-24 h-12 bg-black text-white m-4 shadow">
-          Donate
-        </button>
-      } */}
       <div className="relative w-full h-64 rounded-b-md">
         <Image src="/Portage.jpg" layout="fill" className="rounded-b-3xl" priority />
         <div className="rounded-full flex justify-center w-full h-48 absolute -bottom-24 left-0 right-0">
@@ -78,7 +77,7 @@ export default function UserAddress({ userAddress }) {
             <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.link}</h1>
             <pre className="text-gray-600">{data[0]?.attributes.about}</pre>
           </div>
-          {
+          {/* {
             user?.attributes.ethAddress !== userAddress &&
             <div className="px-4 md:px-0 mb-16 md:mb-0">
               <div className="flex flex-col justify-around rounded-3xl w-full sm:w-80 min-w-64 bg-white border-2 border-black text-black sm:m-4 shadow-xl text-center py-4">
@@ -126,20 +125,43 @@ export default function UserAddress({ userAddress }) {
                 </div>
               </div>
             </div>
-          }
+          } */}
         </div>
         <h2 className="mt-2 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
+        {/* <div className="rounded-3xl mx-auto w-full p-8">
+          <div className="flex flex-col md:flex-row md:flex-wrap justify-start gap-4">
+            {
+              data[0]?.attributes.NFTs.map(item => (
+                <div key={item.token_id} className="rounded-2xl bg-white shadow flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                  <div className="min-w-64 max-w-80 md:w-64 h-full w-full">
+                    <img className="rounded-2xl object-cover md:w-64 w-full" src={item.external_data.image} />
+                  </div>
+                  <div className="flex items-center justify-center h-full">
+                    <h3 className="font-semibold text-xl text-left w-full py-3">{item.external_data.name}</h3>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div> */}
         <div className="rounded-3xl mx-auto w-full p-8">
           <div className="flex flex-col md:flex-row md:flex-wrap justify-start gap-4">
             {
               data[0]?.attributes.NFTs.map(item => (
-                <div key={item.image} className="rounded-2xl bg-white shadow flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                <div key={item.image} className="rounded-2xl bg-white shadow flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer" onClick={() => openModal(item)}>
                   <div className="min-w-64 max-w-80 md:w-64 h-full w-full">
-                    <img className="rounded-2xl object-cover md:w-64 w-full" src={item.image} />
+                    <img className="rounded-2xl object-cover md:w-64 w-full"
+                      src={item.image}
+                      onError={(e) => {
+                        // e.target.style.display = 'none'
+                        e.currentTarget.onerror = null
+                        e.currentTarget.src = "https://cdn.shopify.com/s/files/1/2618/8176/files/no-image-found.png?v=3919685981083119590"
+                      }}
+                    />
                   </div>
-                  <div className="flex items-center justify-center h-full">
-                    {/* <p className="text-gray-500 text-left w-full pl-4">{item.metadata.description}</p> */}
-                    <h3 className="font-semibold text-xl text-left w-full py-3">{item.metadata.name}</h3>
+                  <div className="flex flex-col items-start justify-center h-full w-full pl-5 py-2 space-y-2">
+                    <h3 className="font-semibold text-xl text-left w-full">{item.metadata ? item.metadata.name : item.name}</h3>
+                    <p className="text-md text-left w-full">{!item.price || item.price === "0" ? "Not for sale" : item.price + " " + "AVAX"}</p>
                   </div>
                 </div>
               ))
