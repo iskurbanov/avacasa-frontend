@@ -66,7 +66,7 @@ export default function UserAddress({ userAddress }) {
         </div>
       }
       <div className="relative w-full h-64 rounded-b-md">
-        <Image src="/Portage.jpg" layout="fill" className="rounded-b-3xl" priority />
+        <Image src="/Portage.jpg" layout="fill" className="rounded-b-3xl object-cover" priority />
         <div className="rounded-full flex justify-center w-full h-48 absolute -bottom-24 left-0 right-0">
           <img className="bg-white rounded-full object-cover h-48 w-48 border-white border-4" src={data[0]?.attributes.avatar} />
         </div>
@@ -74,7 +74,7 @@ export default function UserAddress({ userAddress }) {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col mt-24 sm:flex-row">
           <div className="rounded-3xl mx-auto w-full h-64 p-8">
-            <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.link}</h1>
+            <h1 className="text-4xl font-semibold mb-2">{data[0]?.attributes.name}</h1>
             <pre className="text-gray-600">{data[0]?.attributes.about}</pre>
           </div>
           {/* {
@@ -127,7 +127,10 @@ export default function UserAddress({ userAddress }) {
             </div>
           } */}
         </div>
-        <h2 className="mt-2 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
+        {
+          data[0]?.attributes.NFTs.length > 0 &&
+          <h2 className="mt-2 mb-1 px-8 font-semibold text-2xl">My NFT Collection</h2>
+        }
         {/* <div className="rounded-3xl mx-auto w-full p-8">
           <div className="flex flex-col md:flex-row md:flex-wrap justify-start gap-4">
             {

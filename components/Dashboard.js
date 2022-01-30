@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [available, setAvailable] = useState(false)
   const [dashboardInput, setDashboardInput] = useState(
     {
+      name: '',
       link: '',
       about: '',
       NFTs: [],
@@ -39,7 +40,7 @@ const Dashboard = () => {
     [dashboardInput.link],
   )
 
-  console.log(linkResult)
+  console.log("linkresult", linkResult)
 
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!isLoading && data[0]) {
       let fetchedData = {
+        name: data[0]?.attributes.name,
         link: data[0]?.attributes.link,
         about: data[0]?.attributes.about,
         NFTs: data[0]?.attributes.NFTs,
@@ -87,6 +89,7 @@ const Dashboard = () => {
 
       toast.promise(
         page.save({
+          name: dashboardInput.name,
           link: dashboardInput.link,
           about: dashboardInput.about,
           NFTs: dashboardInput.NFTs,
@@ -115,6 +118,7 @@ const Dashboard = () => {
       query.equalTo('ethAddress', user.get("ethAddress"))
       const page = await query.first()
 
+      page.set("name", dashboardInput.name)
       page.set("link", dashboardInput.link)
       page.set("about", dashboardInput.about)
       page.set("NFTs", dashboardInput.NFTs)
@@ -152,6 +156,22 @@ const Dashboard = () => {
 
             <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                  Display Name
+                </label>
+                <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={dashboardInput.name}
+                    onChange={e => handleChangeInput(e)}
+                    autoComplete="given-name"
+                    className="max-w-lg block w-full shadow-sm focus:ring-black focus:border-black sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+              </div>
+              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                   Choose a link to your Casavax Profile
                 </label>
@@ -175,13 +195,19 @@ const Dashboard = () => {
 
                   }
                   {
-                    available ?
-                      (
-                        dashboardInput.link === linkResult[0]?.attributes.link ?
-                          <p className="text-green-600">Your current</p> :
-                          <p className="text-green-600">Link address available!</p>
-                      ) :
-                      <p className="text-red-600">Link address already taken!</p>
+                    !dashboardInput.link == '' ?
+                      <div>
+                        {
+                          available ?
+                            (
+                              dashboardInput.link === linkResult[0]?.attributes.link ?
+                                <p className="text-green-600">Your current</p> :
+                                <p className="text-green-600">Link address available!</p>
+                            ) :
+                            <p className="text-red-600">Link address already taken!</p>
+                        }
+                      </div> :
+                      <p className="text-gray-600">Choose your link!</p>
                   }
                 </div>
               </div>
