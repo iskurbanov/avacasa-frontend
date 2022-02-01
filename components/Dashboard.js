@@ -1,9 +1,11 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useMoralis, useMoralisQuery, useNFTBalances } from "react-moralis"
+import { useMoralis, useMoralisQuery, useMoralisCloudFunction } from "react-moralis"
 import toast, { Toaster } from 'react-hot-toast';
-import Nfts from "./Nfts"
 import MoralisNfts from "./MoralisNfts";
+import Web3 from 'web3';
+
+
 
 const Dashboard = () => {
   const { user, Moralis } = useMoralis()
@@ -18,8 +20,65 @@ const Dashboard = () => {
       avatar: `https://avatars.dicebear.com/api/identicon/${username}.svg`
     }
   )
-
   const username = user.get('username')
+  const nft_market_place_address = "0x9eeEd75cb63Dd447522E8a17cd5115594734dE51"
+
+
+  async function offerNFT(nft) {
+
+    const price = Moralis.Units.ETH("1")
+    const contract = nft.token_address
+    const tokenId = nft.token_id
+    
+    try {
+    const approval = await approveMarketPlace(contract, tokenId);
+    const offering = await placeOffering(contract, tokenId, price);
+    console.log(offering)
+    } catch(err) {
+      console.error(err)
+    }
+
+    console.log(price)
+  }
+
+  async function placeOffering(_hostContract, _tokenId, _price) {
+    const params = {
+      hostContract: _hostContract,
+      offerer: ethereum.selectedAddress,
+      tokenId: _tokenId,
+      price: _price
+    }
+    const signedTransaction = await Moralis.Cloud.run("placeOffering", params);
+    const fulfillTx = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
+    return fulfillTx;
+  }
+
+  async function approveMarketPlace(hostContract, tokenId) {
+    const encodedFunction = web3.eth.abi.encodeFunctionCall({
+      name: "approve",
+      type: "function",
+      inputs: [
+        {
+          type: 'address',
+          name: 'to'
+        },
+        {
+          type: 'uint256',
+          name: 'tokenURI'
+        }]
+    }, [nft_market_place_address, tokenId]);
+
+    const transactionParameters = {
+      to: hostContract,
+      from: ethereum.selectedAddress,
+      data: encodedFunction
+    };
+    const txt = await ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters]
+    });
+    return txt
+  }
 
 
   const { data, isLoading, error } = useMoralisQuery(
@@ -40,8 +99,17 @@ const Dashboard = () => {
     [dashboardInput.link],
   )
 
-  console.log("linkresult", linkResult)
+  const { data: Offers } = useMoralisQuery(
+    'PlacedOfferings',
+    (query) => query
+      .equalTo("offerer", user.get("ethAddress")),
+    [],
+    {
+      live: true
+    }
+  )
 
+  console.log(Offers)
 
   useEffect(() => {
     if (dashboardInput.link === linkResult[0]?.attributes.link) {
@@ -232,7 +300,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/* <Nfts dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} userAddress={user.get("ethAddress")} /> */}
-        <MoralisNfts dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} userAddress={user.get("ethAddress")} />
+        <MoralisNfts offerNFT={offerNFT} dashboardInput={dashboardInput} setDashboardInput={setDashboardInput} data={data} setSaveLoading={setSaveLoading} userAddress={user.get("ethAddress")} />
         <div className="pt-5">
           <div className="flex justify-end">
             <button

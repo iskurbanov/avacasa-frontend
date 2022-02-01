@@ -1,14 +1,19 @@
+import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useMoralis, useMoralisQuery } from 'react-moralis'
+import Icon from '../components/Icon'
 import Modal from '../components/Modal'
 
 export default function UserAddress({ userAddress }) {
+
   const [loading, setLoading] = useState(true)
   const { user, logout, Moralis, authenticate, isAuthenticating, isAuthenticated } = useMoralis()
   const [open, setOpen] = useState(false)
   const [modalData, setModalData] = useState({})
+  const [offering, setOffering] = useState([])
+
 
   const { data, error, isLoading, isFetching } = useMoralisQuery(
     'Pages',
@@ -26,16 +31,54 @@ export default function UserAddress({ userAddress }) {
     }
   )
 
+  // async function buyNFT(nft) {
+  //   const price = Moralis.Units.ETH(offering.price);
+  //   const priceHexString = BigInt(price).toString(16);
+  //   closedOffering = await closeOffering(offeringId, priceHexString);
+  //   context.parentElement.innerHTML = tx_closeOffering;
+  // }
+
+
+  const { data: Offers } = useMoralisQuery(
+    'PlacedOfferings',
+    (query) => query
+      .equalTo("offerer", data[0]?.attributes.ethAddress),
+    [data],
+    {
+      live: true
+    }
+  )
+
+  console.log("Offers", Offers)
+
+  useEffect(() => {
+    if (Offers[0]?.attributes, { mode: 'cors' }) {
+      const newOffering = []
+      for (let i = 0; i < Offers.length; i++) {
+        axios.get(Offers[i].attributes.uri).then((res) => {
+          const metadata = res.data
+          const offering = { metadata, price: Moralis.Units.FromWei(Offers[i].attributes.price), hostContract: Offers[i].attributes.hostContract }
+          newOffering.push(offering)
+        })
+      }
+      setOffering(newOffering)
+    }
+  }, [Offers]);
+
+
+  console.log("offering", offering)
+
   useEffect(() => {
     if (data[0]?.attributes.link) setLoading(false)
   }, [data])
 
   if (loading) return (
     <div className="flex justify-center items-center h-screen">
-      <div className="spinner-grow inline-block rounded-full animate-bounce" role="status">
+      <div className="relative spinner-grow rounded-full animate-bounce inline-block" role="status">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
           <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
         </svg>
+        {/* <Image src="/logo.png" layout="fill" className="object-contain" priority/> */}
       </div>
     </div>
   )
@@ -153,7 +196,7 @@ export default function UserAddress({ userAddress }) {
               data[0]?.attributes.NFTs.map(item => (
                 <div key={item.image} className="rounded-2xl bg-white shadow flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer" onClick={() => openModal(item)}>
                   <div className="min-w-64 max-w-80 md:w-64 h-full w-full">
-                    <img className="rounded-2xl object-cover md:w-64 w-full"
+                    <img className="rounded-2xl object-cover md:w-64 md:h-64 w-full"
                       src={item.image}
                       onError={(e) => {
                         // e.target.style.display = 'none'

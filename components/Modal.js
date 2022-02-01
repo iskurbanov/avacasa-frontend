@@ -40,7 +40,7 @@ export default function Modal({ open, setOpen, modalData }) {
               <div className="sm:block absolute top-0 right-0 pt-4 pr-4">
                 <button
                   type="button"
-                  className="bg-white rounded-md text-gray-400 hover:text-gray-500"
+                  className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none"
                   onClick={() => setOpen(false)}
                 >
                   <span className="sr-only">Close</span>
@@ -49,7 +49,7 @@ export default function Modal({ open, setOpen, modalData }) {
               </div>
               <div className="sm:flex sm:items-start">
                 <div className="min-w-64 max-w-80 md:w-80 h-full w-full">
-                  <img className="rounded-2xl object-cover md:w-80 w-full"
+                  <img className="rounded-2xl object-cover w-80 h-80"
                     src={modalData.image}
                     onError={(e) => {
                       // e.target.style.display = 'none'
@@ -58,7 +58,7 @@ export default function Modal({ open, setOpen, modalData }) {
                     }}
                   />
                 </div>
-                <div className="pl-2 sm:w-1/2">
+                <div className="pl-6 sm:w-1/2">
                   <p className="font-semibold text-2xl text-left">{modalData.metadata ? modalData.metadata.name : modalData.name}</p>
                   <p className="text-md text-left w-full pt-2">{!modalData.price || modalData.price === "0" ? "Not for sale" : modalData.price + " " + "AVAX"}</p>
                   {
@@ -68,7 +68,7 @@ export default function Modal({ open, setOpen, modalData }) {
                       <div className="flex flex-wrap">
                         {
                           modalData.metadata.attributes?.map(item => (
-                            <div key={item.trait_type} className="bg-gray-50 rounded-2xl p-2 flex flex-col mr-2 mb-2">
+                            <div key={item.trait_type} className="bg-gray-100 rounded-xl px-3 py-2 flex flex-col mr-2 mb-2">
                               <span className="text-gray-500 uppercase font-semibold text-xs">{item.trait_type}</span>
                               <span className="font-semibold text-sm">{item.value}</span>
                             </div>
@@ -80,8 +80,8 @@ export default function Modal({ open, setOpen, modalData }) {
                   {
                     modalData.price && modalData.price > 0 &&
                     <button
-                        onClick={() => window.open(`https://nftrade.com/assets/avalanche/${modalData.token_address}/${modalData.token_id}`, "_blank")}
-                      className="w-64 mt-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-xl text-white bg-black hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                        onClick={() => window.open(`https://testnets.nftrade.com/assets/fuji/${modalData.token_address}/${modalData.token_id}`, "_blank")}
+                      className="w-64 mt-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm font-medium rounded-xl text-white bg-black hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                     >
                       Buy
                     </button>

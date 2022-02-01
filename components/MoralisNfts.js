@@ -3,7 +3,7 @@ import { useNFTBalances } from 'react-moralis'
 import { useVerifyMetadata } from "../hooks/useVerifyMetadata"
 
 
-const Nfts = ({ dashboardInput, setDashboardInput, setSaveLoading }) => {
+const Nfts = ({ offerNFT, dashboardInput, setDashboardInput, setSaveLoading }) => {
   const { data: NFTBalances } = useNFTBalances()
   const { verifyMetadata } = useVerifyMetadata()
   const [loading, setLoading] = useState(true)
@@ -33,7 +33,7 @@ const Nfts = ({ dashboardInput, setDashboardInput, setSaveLoading }) => {
     newNFTs[index] = updatedPrice
 
     setMainNFTs(newNFTs)
-    
+
     const nftWithPrice = dashboardInput.NFTs.map((item, index) => {
       if (dashboardInput.NFTs.length > 0) {
         for (let i = 0; i < newNFTs.length; i++) {
@@ -58,7 +58,6 @@ const Nfts = ({ dashboardInput, setDashboardInput, setSaveLoading }) => {
       setLoading(false)
     }
   }, [NFTBalances])
-
 
   return (
     <div className="pb-12 pt-3">
