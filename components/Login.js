@@ -21,7 +21,10 @@ export const Login = () => {
           <p className="px-8 text-center opacity-50">Sell your NFTs directly to your audience!</p>
           <div className="relative group">
             <div className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-pink-600 to-purple-600 blur-md opacity-75 group-hover:opacity-100 animate-tilt transition-opacity"></div>
-            <button onClick={authenticate} className="relative px-4 py-2 font-medium rounded-full text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">{!isAuthenticating ? "Claim My Shop" : "Authenticating..."}</button>
+            <button onClick={authenticate} className="relative px-4 py-2 font-medium rounded-full text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+              {!isAuthenticating ? "Claim My Shop" : "Authenticating..."}
+            </button>
+            
           </div>
         </div>
       </div>

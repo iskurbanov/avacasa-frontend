@@ -17,8 +17,19 @@ export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>AvaCasa - Home of Avax</title>
+        <title>AvaCasa - Your NFT Shop</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="Your personal NFT Shop on the Avalanche Network" />
+        <meta name="keywords" content="avalanche,moralis,next.js,tailwindcss" />
+        <meta property="og:title" content="AvaCasa" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.avacasa.xyz/" />
+        <meta property="og:image" content="https://avacasa.xyz/screenshot2.png" />
+        <meta property="og:description" content="Your personal NFT Shop on the Avalanche Network" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="AvaCasa" />
       </Head>
       {
         !isAuthenticated ? <Login />
